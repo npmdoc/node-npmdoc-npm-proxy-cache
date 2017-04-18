@@ -1,0 +1,651 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/runk/npm-proxy-cache#readme"
+
+    >npm-proxy-cache (v1.0.1)</a>
+</h1>
+<h4>HTTP/HTTPS caching proxy for work with `npm` utility / registry</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.npm-proxy-cache">module npm-proxy-cache</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.httpHandler">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.</span>httpHandler
+            <span class="apidocSignatureSpan">(req, res)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.httpsHandler">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.</span>httpsHandler
+            <span class="apidocSignatureSpan">(request, socketRequest, bodyhead)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.powerup">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.</span>powerup
+            <span class="apidocSignatureSpan">(opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.</span>cache</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.</span>log</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.</span>opts</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.</span>proxy</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.npm-proxy-cache.proxy">module npm-proxy-cache.proxy</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.proxy.httpHandler">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>httpHandler
+            <span class="apidocSignatureSpan">(req, res)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.proxy.httpsHandler">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>httpsHandler
+            <span class="apidocSignatureSpan">(request, socketRequest, bodyhead)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npm-proxy-cache.proxy.powerup">
+            function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>powerup
+            <span class="apidocSignatureSpan">(opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>cache</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>log</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>opts</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.npm-proxy-cache" id="apidoc.module.npm-proxy-cache">module npm-proxy-cache</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.httpHandler" id="apidoc.element.npm-proxy-cache.httpHandler">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.</span>httpHandler
+        <span class="apidocSignatureSpan">(req, res)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">httpHandler = function (req, res) {
+  var cache = exports.cache,
+    log = exports.log,
+    path = url.parse(req.url).path,
+    schema = req.client.pair || req.connection.encrypted ? &#x27;https&#x27; : &#x27;http&#x27;,
+    dest = schema + &#x27;://&#x27; + req.headers[&#x27;host&#x27;] + path;
+
+  if (req.headers[cycleCheckHeader]) {
+    res.writeHead(502);
+    res.end(&#x27;Sending requests to myself. Stopping to prevent cycles.&#x27;);
+    return;
+  }
+
+  var params = {
+    headers: {},
+    rejectUnauthorized: false,
+    url: dest
+  };
+
+  params.headers[cycleCheckHeader] = 1;
+
+  // Carry following headers down to dest npm repository.
+  var carryHeaders = [&#x27;authorization&#x27;, &#x27;version&#x27;, &#x27;referer&#x27;, &#x27;npm-session&#x27;, &#x27;user-agent&#x27;];
+  carryHeaders.forEach(function(name) {
+    params.headers[name] = req.headers[name];
+  });
+
+  if (exports.opts.proxy)
+    params.proxy = exports.opts.proxy;
+
+
+  // Skipping other than GET methods
+  // Skipping metadata requests when configured
+  if (
+    req.method !== &#x27;GET&#x27; ||
+    (exports.opts.metadataExcluded &#x26;&#x26; req.headers[&#x27;accept&#x27;] === &#x27;application/json&#x27;)
+  )
+    return bypass(req, res, params);
+
+
+  cache.meta(dest, function(err, meta) {
+    if (err)
+      throw err;
+
+    if (meta.status === Cache.FRESH)
+      return respondWithCache(dest, cache, meta, res);
+
+    var p = cache.getPath(dest);
+    log.debug(&#x27;Cache file:&#x27;, p.rel);
+
+    log.warn(&#x27;direct&#x27;, dest);
+
+    var onResponse = function(err, response) {
+      // don&#x27;t save responses with codes other than 200
+      if (!err &#x26;&#x26; response.statusCode === 200) {
+        var file = cache.write(dest);
+        r.pipe(file).on(&#x27;finish&#x27;, function() {
+          cache.meta(dest, function(err, meta) {
+            if (err)
+              throw err;
+            respondWithCache(dest, cache, meta, res);
+          });
+        });
+      } else {
+        // serve expired cache if user wants so
+        if (exports.opts.expired &#x26;&#x26; meta.status === Cache.EXPIRED)
+          return respondWithCache(dest, cache, meta, res);
+
+        log.error(&#x27;An error occcured: &#x22;%s&#x22;, status code &#x22;%s&#x22;&#x27;,
+          err ? err.message : &#x27;Unknown&#x27;,
+          response ? response.statusCode : 0
+        );
+
+        // clean old cache
+        if (meta.status !== Cache.NOT_FOUND)
+          cache.unlink(dest);
+
+        res.end(err ? err.toString() : &#x27;Status &#x27; + response.statusCode + &#x27; returned&#x27;);
+      }
+    };
+
+    var r = request(params);
+    r.on(&#x27;response&#x27;, onResponse.bind(null, null));
+    r.on(&#x27;error&#x27;, onResponse.bind(null));
+    r.on(&#x27;end&#x27;, function() {
+      log.debug(&#x27;end&#x27;);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.httpsHandler" id="apidoc.element.npm-proxy-cache.httpsHandler">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.</span>httpsHandler
+        <span class="apidocSignatureSpan">(request, socketRequest, bodyhead)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">httpsHandler = function (request, socketRequest, bodyhead) {
+  var log = exports.log,
+    httpVersion = request[&#x27;httpVersion&#x27;];
+
+  log.debug(&#x27;  = will connect to socket (or port) &#x22;%s&#x22;&#x27;, mitmAddress);
+
+  // set up TCP connection
+  var proxySocket = new net.Socket();
+  proxySocket.connect(mitmAddress, function() {
+    log.debug(&#x27;&#x3c; connected to socket (or port) &#x22;%s&#x22;&#x27;, mitmAddress);
+    log.debug(&#x27;&#x3e; writing head of length %d&#x27;, bodyhead.length);
+
+    proxySocket.write(bodyhead);
+
+    // tell the caller the connection was successfully established
+    socketRequest.write(&#x27;HTTP/&#x27; + httpVersion + &#x27; 200 Connection established\r\n\r\n&#x27;);
+  });
+
+  proxySocket.on(&#x27;data&#x27;, function(chunk) {
+    log.debug(&#x27;&#x3c; data length = %d&#x27;, chunk.length);
+    socketRequest.write(chunk);
+  });
+
+  proxySocket.on(&#x27;end&#x27;, function() {
+    log.debug(&#x27;&#x3c; end&#x27;);
+    socketRequest.end();
+  });
+
+  socketRequest.on(&#x27;data&#x27;, function(chunk) {
+    log.debug(&#x27;&#x3e; data length = %d&#x27;, chunk.length);
+    proxySocket.write(chunk);
+  });
+
+  socketRequest.on(&#x27;end&#x27;, function() {
+    log.debug(&#x27;&#x3e; end&#x27;);
+    proxySocket.end();
+  });
+
+  proxySocket.on(&#x27;error&#x27;, function(err) {
+    socketRequest.write(&#x27;HTTP/&#x27; + httpVersion + &#x27; 500 Connection error\r\n\r\n&#x27;);
+    log.error(&#x27;&#x3c; ERR: %s&#x27;, err.toString());
+    socketRequest.end();
+  });
+
+  socketRequest.on(&#x27;error&#x27;, function(err) {
+    log.error(&#x27;&#x3e; ERR: %s&#x27;, err.toString());
+    proxySocket.end();
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.powerup" id="apidoc.element.npm-proxy-cache.powerup">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.</span>powerup
+        <span class="apidocSignatureSpan">(opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">powerup = function (opts) {
+
+  exports.opts = opts || {};
+
+  var options = {
+    key: fs.readFileSync(path.join(__dirname, &#x27;/../cert/dummy.key&#x27;), &#x27;utf8&#x27;),
+    cert: fs.readFileSync(path.join(__dirname, &#x27;/../cert/dummy.crt&#x27;), &#x27;utf8&#x27;)
+  };
+
+  this.cache = new Cache({
+    path: opts.storage, ttl: opts.ttl, friendlyNames: opts.friendlyNames
+  });
+
+  this.log = log4js.getLogger(&#x27;proxy&#x27;);
+  this.log.setLevel(opts.verbose ? &#x27;DEBUG&#x27; : &#x27;INFO&#x27;);
+
+  if (opts.logPath) {
+    log4js.loadAppender(&#x27;file&#x27;);
+    log4js.addAppender(log4js.appenders.file(opts.logPath), &#x27;proxy&#x27;);
+  }
+
+  // Fake https server aka MITM
+  var mitm = https.createServer(options, exports.httpHandler);
+
+  // NOTE: for windows platform user has to specify port, since
+  // it does not support unix sockets.
+  if (/^win/i.test(process.platform) &#x26;&#x26; !isNumeric(opts.internalPort)) {
+    console.error(&#x27;Error: On Windows platform you have to specify internal port,\n&#x27;
+      + &#x27;for example `--internal-port 8081`.&#x27;);
+    process.exit(1);
+  }
+  if (opts.internalPort) {
+    mitmAddress = opts.internalPort;
+
+  } else {
+    mitmAddress = path.join(os.tmpdir(), &#x27;mitm.sock&#x27;);
+
+    // Cleanup MITM socket for unix platforms
+    if (fs.existsSync(mitmAddress))
+      fs.unlinkSync(mitmAddress);
+  }
+
+  mitm.listen(mitmAddress);
+
+  // start HTTP server with custom request handler callback function
+  var server = http.createServer(exports.httpHandler).listen(opts.port, opts.host, function(err) {
+    if (err) throw err;
+    exports.log.info(&#x27;Listening on %s:%s [%d]&#x27;, opts.host, opts.port, process.pid);
+  });
+
+  // add handler for HTTPS (which issues a CONNECT to the proxy)
+  server.addListener(&#x27;connect&#x27;, this.httpsHandler);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.npm-proxy-cache.proxy" id="apidoc.module.npm-proxy-cache.proxy">module npm-proxy-cache.proxy</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.proxy.httpHandler" id="apidoc.element.npm-proxy-cache.proxy.httpHandler">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>httpHandler
+        <span class="apidocSignatureSpan">(req, res)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">httpHandler = function (req, res) {
+  var cache = exports.cache,
+    log = exports.log,
+    path = url.parse(req.url).path,
+    schema = req.client.pair || req.connection.encrypted ? &#x27;https&#x27; : &#x27;http&#x27;,
+    dest = schema + &#x27;://&#x27; + req.headers[&#x27;host&#x27;] + path;
+
+  if (req.headers[cycleCheckHeader]) {
+    res.writeHead(502);
+    res.end(&#x27;Sending requests to myself. Stopping to prevent cycles.&#x27;);
+    return;
+  }
+
+  var params = {
+    headers: {},
+    rejectUnauthorized: false,
+    url: dest
+  };
+
+  params.headers[cycleCheckHeader] = 1;
+
+  // Carry following headers down to dest npm repository.
+  var carryHeaders = [&#x27;authorization&#x27;, &#x27;version&#x27;, &#x27;referer&#x27;, &#x27;npm-session&#x27;, &#x27;user-agent&#x27;];
+  carryHeaders.forEach(function(name) {
+    params.headers[name] = req.headers[name];
+  });
+
+  if (exports.opts.proxy)
+    params.proxy = exports.opts.proxy;
+
+
+  // Skipping other than GET methods
+  // Skipping metadata requests when configured
+  if (
+    req.method !== &#x27;GET&#x27; ||
+    (exports.opts.metadataExcluded &#x26;&#x26; req.headers[&#x27;accept&#x27;] === &#x27;application/json&#x27;)
+  )
+    return bypass(req, res, params);
+
+
+  cache.meta(dest, function(err, meta) {
+    if (err)
+      throw err;
+
+    if (meta.status === Cache.FRESH)
+      return respondWithCache(dest, cache, meta, res);
+
+    var p = cache.getPath(dest);
+    log.debug(&#x27;Cache file:&#x27;, p.rel);
+
+    log.warn(&#x27;direct&#x27;, dest);
+
+    var onResponse = function(err, response) {
+      // don&#x27;t save responses with codes other than 200
+      if (!err &#x26;&#x26; response.statusCode === 200) {
+        var file = cache.write(dest);
+        r.pipe(file).on(&#x27;finish&#x27;, function() {
+          cache.meta(dest, function(err, meta) {
+            if (err)
+              throw err;
+            respondWithCache(dest, cache, meta, res);
+          });
+        });
+      } else {
+        // serve expired cache if user wants so
+        if (exports.opts.expired &#x26;&#x26; meta.status === Cache.EXPIRED)
+          return respondWithCache(dest, cache, meta, res);
+
+        log.error(&#x27;An error occcured: &#x22;%s&#x22;, status code &#x22;%s&#x22;&#x27;,
+          err ? err.message : &#x27;Unknown&#x27;,
+          response ? response.statusCode : 0
+        );
+
+        // clean old cache
+        if (meta.status !== Cache.NOT_FOUND)
+          cache.unlink(dest);
+
+        res.end(err ? err.toString() : &#x27;Status &#x27; + response.statusCode + &#x27; returned&#x27;);
+      }
+    };
+
+    var r = request(params);
+    r.on(&#x27;response&#x27;, onResponse.bind(null, null));
+    r.on(&#x27;error&#x27;, onResponse.bind(null));
+    r.on(&#x27;end&#x27;, function() {
+      log.debug(&#x27;end&#x27;);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.proxy.httpsHandler" id="apidoc.element.npm-proxy-cache.proxy.httpsHandler">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>httpsHandler
+        <span class="apidocSignatureSpan">(request, socketRequest, bodyhead)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">httpsHandler = function (request, socketRequest, bodyhead) {
+  var log = exports.log,
+    httpVersion = request[&#x27;httpVersion&#x27;];
+
+  log.debug(&#x27;  = will connect to socket (or port) &#x22;%s&#x22;&#x27;, mitmAddress);
+
+  // set up TCP connection
+  var proxySocket = new net.Socket();
+  proxySocket.connect(mitmAddress, function() {
+    log.debug(&#x27;&#x3c; connected to socket (or port) &#x22;%s&#x22;&#x27;, mitmAddress);
+    log.debug(&#x27;&#x3e; writing head of length %d&#x27;, bodyhead.length);
+
+    proxySocket.write(bodyhead);
+
+    // tell the caller the connection was successfully established
+    socketRequest.write(&#x27;HTTP/&#x27; + httpVersion + &#x27; 200 Connection established\r\n\r\n&#x27;);
+  });
+
+  proxySocket.on(&#x27;data&#x27;, function(chunk) {
+    log.debug(&#x27;&#x3c; data length = %d&#x27;, chunk.length);
+    socketRequest.write(chunk);
+  });
+
+  proxySocket.on(&#x27;end&#x27;, function() {
+    log.debug(&#x27;&#x3c; end&#x27;);
+    socketRequest.end();
+  });
+
+  socketRequest.on(&#x27;data&#x27;, function(chunk) {
+    log.debug(&#x27;&#x3e; data length = %d&#x27;, chunk.length);
+    proxySocket.write(chunk);
+  });
+
+  socketRequest.on(&#x27;end&#x27;, function() {
+    log.debug(&#x27;&#x3e; end&#x27;);
+    proxySocket.end();
+  });
+
+  proxySocket.on(&#x27;error&#x27;, function(err) {
+    socketRequest.write(&#x27;HTTP/&#x27; + httpVersion + &#x27; 500 Connection error\r\n\r\n&#x27;);
+    log.error(&#x27;&#x3c; ERR: %s&#x27;, err.toString());
+    socketRequest.end();
+  });
+
+  socketRequest.on(&#x27;error&#x27;, function(err) {
+    log.error(&#x27;&#x3e; ERR: %s&#x27;, err.toString());
+    proxySocket.end();
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npm-proxy-cache.proxy.powerup" id="apidoc.element.npm-proxy-cache.proxy.powerup">
+        function <span class="apidocSignatureSpan">npm-proxy-cache.proxy.</span>powerup
+        <span class="apidocSignatureSpan">(opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">powerup = function (opts) {
+
+  exports.opts = opts || {};
+
+  var options = {
+    key: fs.readFileSync(path.join(__dirname, &#x27;/../cert/dummy.key&#x27;), &#x27;utf8&#x27;),
+    cert: fs.readFileSync(path.join(__dirname, &#x27;/../cert/dummy.crt&#x27;), &#x27;utf8&#x27;)
+  };
+
+  this.cache = new Cache({
+    path: opts.storage, ttl: opts.ttl, friendlyNames: opts.friendlyNames
+  });
+
+  this.log = log4js.getLogger(&#x27;proxy&#x27;);
+  this.log.setLevel(opts.verbose ? &#x27;DEBUG&#x27; : &#x27;INFO&#x27;);
+
+  if (opts.logPath) {
+    log4js.loadAppender(&#x27;file&#x27;);
+    log4js.addAppender(log4js.appenders.file(opts.logPath), &#x27;proxy&#x27;);
+  }
+
+  // Fake https server aka MITM
+  var mitm = https.createServer(options, exports.httpHandler);
+
+  // NOTE: for windows platform user has to specify port, since
+  // it does not support unix sockets.
+  if (/^win/i.test(process.platform) &#x26;&#x26; !isNumeric(opts.internalPort)) {
+    console.error(&#x27;Error: On Windows platform you have to specify internal port,\n&#x27;
+      + &#x27;for example `--internal-port 8081`.&#x27;);
+    process.exit(1);
+  }
+  if (opts.internalPort) {
+    mitmAddress = opts.internalPort;
+
+  } else {
+    mitmAddress = path.join(os.tmpdir(), &#x27;mitm.sock&#x27;);
+
+    // Cleanup MITM socket for unix platforms
+    if (fs.existsSync(mitmAddress))
+      fs.unlinkSync(mitmAddress);
+  }
+
+  mitm.listen(mitmAddress);
+
+  // start HTTP server with custom request handler callback function
+  var server = http.createServer(exports.httpHandler).listen(opts.port, opts.host, function(err) {
+    if (err) throw err;
+    exports.log.info(&#x27;Listening on %s:%s [%d]&#x27;, opts.host, opts.port, process.pid);
+  });
+
+  // add handler for HTTPS (which issues a CONNECT to the proxy)
+  server.addListener(&#x27;connect&#x27;, this.httpsHandler);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
