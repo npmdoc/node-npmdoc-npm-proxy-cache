@@ -1,6 +1,6 @@
 # npmdoc-npm-proxy-cache
 
-#### api documentation for  [npm-proxy-cache (v1.0.1)](https://github.com/runk/npm-proxy-cache#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-npm-proxy-cache.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-npm-proxy-cache) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-npm-proxy-cache.svg)](https://travis-ci.org/npmdoc/node-npmdoc-npm-proxy-cache)
+#### basic api documentation for  [npm-proxy-cache (v1.0.1)](https://github.com/runk/npm-proxy-cache#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-npm-proxy-cache.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-npm-proxy-cache) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-npm-proxy-cache.svg)](https://travis-ci.org/npmdoc/node-npmdoc-npm-proxy-cache)
 
 #### HTTP/HTTPS caching proxy for work with `npm` utility / registry
 
